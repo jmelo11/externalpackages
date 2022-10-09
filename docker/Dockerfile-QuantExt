@@ -1,0 +1,27 @@
+ARG tag=latest
+FROM quantlib:${tag}
+
+LABEL Author="Itau"
+LABEL Description="Build ORE and add to the QuantLib build environment"
+
+# Argument for number of cores to use while building
+ARG num_cores=16
+
+# Copy ORE sources for libs and app
+COPY Engine/QuantExt ore/QuantExt
+COPY Engine/cmake ore/cmake
+
+# Need the dos2unix all if building from Windows because the shell 
+# scripts fail if there are CRLF present in the files
+RUN cd ore/QuantExt \    
+  && mkdir -p build.ore && cd build.ore \
+  && cmake .. -DBUILD_DOC=OFF -DCMAKE_BUILD_TYPE=Release
+
+WORKDIR ore/QuantExt/build.ore
+RUN make -j ${num_cores} \
+  && make install \
+  && cd / \
+  && rm -rf ore/QuantExt \
+  && ldconfig
+
+CMD bash

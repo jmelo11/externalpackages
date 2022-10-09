@@ -1,0 +1,32 @@
+ARG tag=latest
+FROM debian:${tag}
+
+#arguments with boost's version numbers (must be after FROM tag)
+
+ARG boost_dir=boost_1_80_0
+ARG boost_version_dot=1.80.0
+ARG boost_filename=boost_1_80_0.tar.gz
+
+ARG boost_variant=release
+ARG num_cores=16
+
+LABEL author="Itau"
+LABEL Description="Provide a base environment for building in C++ with Boost"
+
+RUN apt-get update && apt-get upgrade -y \
+ && apt-get install -f -y build-essential wget libbz2-dev autoconf libtool dos2unix cmake zlib1g-dev \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+
+RUN wget -O ${boost_filename} https://sourceforge.net/projects/boost/files/boost/${boost_version_dot}/${boost_filename}/download \
+    && tar xfz ${boost_filename} \
+    && rm ${boost_filename} \
+    && cd ${boost_dir} \
+    && ./bootstrap.sh \
+    && ./b2 --without-python -j ${num_cores} link=shared runtime-link=shared variant=${boost_variant} install \
+    && cd .. \
+    && rm -rf ${boost_dir} \
+    && ldconfig
+
+CMD bash
