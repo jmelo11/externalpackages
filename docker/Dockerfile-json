@@ -1,0 +1,26 @@
+ARG tag=latest
+FROM debian:${tag}
+
+LABEL author="Itau"
+LABEL Description="Provide a base environment for building in JSON C++"
+
+# Argument for number of cores to use while building
+ARG num_cores=16
+
+COPY json /json
+
+RUN apt-get update && apt-get upgrade -y \
+ && apt-get install -f -y libtool build-essential cmake \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN cd /json \  
+  && mkdir -p build.json && cd build.json \
+  && cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DCMAKE_CXX_EXTENSIONS=OFF
+
+WORKDIR /json/build.json
+RUN make -j ${num_cores} \
+  && make install \
+  && cd / \
+  && rm -rf /json \
+  && ldconfig

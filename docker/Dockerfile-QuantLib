@@ -24,5 +24,4 @@ RUN make -j ${num_cores} \
   && rm -rf ore/QuantLib \
   && ldconfig
 
-
 CMD bash

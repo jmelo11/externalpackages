@@ -1,0 +1,21 @@
+ARG tag=latest
+FROM json:${tag}
+
+LABEL author="Itau"
+LABEL Description="Provide a base environment for building in json schema validator C++"
+
+# Argument for number of cores to use while building
+ARG num_cores=16
+
+COPY json-schema-validator /json-schema-validator
+
+RUN cd /json-schema-validator \  
+  && mkdir -p build.json-schema-validator && cd build.json-schema-validator \
+  && cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20
+
+WORKDIR /json-schema-validator/build.json-schema-validator
+RUN make -j ${num_cores} \
+  && make install \
+  && cd / \
+  && rm -rf /json-schema-validator \
+  && ldconfig
