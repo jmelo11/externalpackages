@@ -10,18 +10,10 @@ ARG num_cores=16
 # Exclusions are performed by .dockerignore
 COPY Engine/QuantLib ore/QuantLib
 
-# Need the dos2unix all if building from Windows because the shell 
-# scripts fail if there are CRLF present in the files
-RUN cd ore/QuantLib \  
-  && mkdir -p build.ql && cd build.ql \
-  && cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DCMAKE_CXX_EXTENSIONS=OFF -DCMAKE_CXX_FLAGS="-D BOOST_ENABLE_ASSERT_HANDLER" -DQL_ENABLE_SESSIONS=OFF -DQL_BUILD_BENCHMARK=OFF -DQL_BUILD_EXAMPLES=OFF -DQL_BUILD_TEST_SUITE=OFF -DQL_INSTALL_BENCHMARK=OFF -DQL_INSTALL_EXAMPLES=OFF -DQL_INSTALL_TEST_SUITE=OFF
+WORKDIR /ore/QuantLib/build.ql
+RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DCMAKE_CXX_EXTENSIONS=OFF -DCMAKE_CXX_FLAGS="-D BOOST_ENABLE_ASSERT_HANDLER" -DQL_ENABLE_SESSIONS=OFF -DQL_BUILD_BENCHMARK=OFF -DQL_BUILD_EXAMPLES=OFF -DQL_BUILD_TEST_SUITE=OFF -DQL_INSTALL_BENCHMARK=OFF -DQL_INSTALL_EXAMPLES=OFF -DQL_INSTALL_TEST_SUITE=OFF
+RUN make -j ${num_cores} && make install 
+RUN cd / && rm -d -rf ore && ldconfig
 
-
-WORKDIR ore/QuantLib/build.ql
-RUN make -j ${num_cores} \
-  && make install \
-  && cd / \
-  && rm -rf ore/QuantLib \
-  && ldconfig
-
+WORKDIR /
 CMD bash

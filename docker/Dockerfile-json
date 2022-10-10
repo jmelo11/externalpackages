@@ -14,13 +14,10 @@ RUN apt-get update && apt-get upgrade -y \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN cd /json \  
-  && mkdir -p build.json && cd build.json \
-  && cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DCMAKE_CXX_EXTENSIONS=OFF
-
 WORKDIR /json/build.json
-RUN make -j ${num_cores} \
-  && make install \
-  && cd / \
-  && rm -rf /json \
-  && ldconfig
+RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DCMAKE_CXX_EXTENSIONS=OFF
+RUN make -j ${num_cores} && make install 
+RUN cd / && rm -rf json && ldconfig
+
+WORKDIR /
+CMD bash

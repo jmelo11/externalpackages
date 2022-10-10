@@ -11,17 +11,10 @@ ARG num_cores=16
 COPY Engine/QuantExt ore/QuantExt
 COPY Engine/cmake ore/cmake
 
-# Need the dos2unix all if building from Windows because the shell 
-# scripts fail if there are CRLF present in the files
-RUN cd ore/QuantExt \    
-  && mkdir -p build.ore && cd build.ore \
-  && cmake .. -DBUILD_DOC=OFF -DCMAKE_BUILD_TYPE=Release
-
 WORKDIR ore/QuantExt/build.ore
-RUN make -j ${num_cores} \
-  && make install \
-  && cd / \
-  && rm -rf ore/QuantExt \
-  && ldconfig
+RUN cmake .. -DBUILD_DOC=OFF -DCMAKE_BUILD_TYPE=Release
+RUN make -j ${num_cores} && make install 
+RUN cd / && rm -d -rf ore && ldconfig
 
+WORKDIR /
 CMD bash
