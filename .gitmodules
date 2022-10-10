@@ -1,3 +1,9 @@
 [submodule "Engine"]
 	path = Engine
 	url = https://github.com/OpenSourceRisk/Engine.git
+[submodule "json"]
+	path = json
+	url = https://github.com/nlohmann/json.git
+[submodule "json-schema-validator"]
+	path = json-schema-validator
+	url = https://github.com/pboettch/json-schema-validator.git
