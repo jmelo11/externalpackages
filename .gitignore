@@ -48,3 +48,10 @@ Thumbs.db
 *.mov
 *.wmv
 
+# Builds
+/Engine/QuantLib/build
+/Engine/QuantExt/build
+/json/build
+/json-schema-validator/build
+/builds
+
