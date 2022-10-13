@@ -24,15 +24,35 @@ Ejemplos:
     FROM json:lastest
     COPY --from=0 /usr/local/ /usr/local/ # copia todo lo que esta en la imagen 0 (quantlib) en la imagen actual, sin borrar lo de la segunda imagen (json)
 
-- Para compilar en windows, se debe agregar el tag -DBoost_INCLUDE_DIRS, y luego se debe compilar desde Visual Studio. Ej (desde la carpeta Engine/QuantLib/build):
+- Para compilar en windows, se debe agregar el tag -DBoost_INCLUDE_DIRS, y luego se debe compilar desde Visual Studio. Además, para que funcione find_package de CMAKE, es necesario que el nombre del paquete coicida con el nombre de la carpeta donde se encuentra guardada. Ej (desde la carpeta Engine/QuantLib/build):
   
-  - QuantLib:
+  - JSON:
+  
+  cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\json\build
+  cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\nlohmann_json'
+  cmake --build . --target INSTALL --config Release
 
-        cmake .. -DCMAKE_CXX_STANDARD=20 -DBoost_INCLUDE_DIR='C:\Users\bloomberg\Desktop\Desarrollo\boost' -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\builds\QuantLib'
-        cmake --build . --target INSTALL --config Release
+  - QuantLib:
+  
+  cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\Engine\QuantLib\build
+  cmake .. -DCMAKE_CXX_STANDARD=20 -DBoost_INCLUDE_DIR='C:\Users\bloomberg\Desktop\Desarrollo\builds\boost' -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\QuantLib'
+  cmake --build . --target INSTALL --config Release
+
+  - QuantExt:
+  
+  cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\Engine\QuantExt\build
+  cmake .. -DCMAKE_CXX_STANDARD=20 -DBoost_INCLUDE_DIR='C:\Users\bloomberg\Desktop\Desarrollo\builds\boost' -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\QuantExt'
+  cmake --build . --target INSTALL --config Release
 
   - Json-schema-validator:
+   
+  cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\json-schema-validator\build
+  cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\nlohmann_json_schema_validator' -DCMAKE_PREFIX_PATH='C:\Users\bloomberg\Desktop\Desarrollo\builds'
+  cmake --build . --target INSTALL --config Release
 
-        cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\builds\json-schema-validator'    -Dnlohmann_json_DIR='C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\builds\json'
-        cmake --build . --target INSTALL --config Release
-
+  - Google test:
+  
+  cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\googletest\build
+  cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\googletest'
+  cmake --build . --target INSTALL --config Release
+    
