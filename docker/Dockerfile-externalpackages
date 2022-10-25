@@ -1,0 +1,16 @@
+ARG tag=latest
+FROM quantext:${tag}
+FROM pybind11:${tag}
+COPY --from=0 /usr/local/ /usr/local/
+
+ARG num_cores=16
+
+COPY json-schema-validator /json-schema-validator
+
+WORKDIR /json-schema-validator/build.json-schema-validator
+RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DBUILD_SHARED_LIBS=ON
+RUN make -j ${num_cores} && make install 
+RUN cd / && rm -rf json-schema-validator && ldconfig
+
+WORKDIR /
+CMD bash

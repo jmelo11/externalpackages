@@ -1,0 +1,42 @@
+ARG tag=latest
+FROM debian:${tag}
+
+LABEL author="Itau"
+LABEL Description="Provide a base environment for building in JSON C++"
+
+# Argument for number of cores to use while building
+ARG num_cores=16
+
+COPY pybind11 /pybind11
+COPY pybind11_json /pybind11_json
+COPY json /json
+
+RUN apt-get update && apt-get upgrade -y \
+ && apt-get install -f -y libtool build-essential cmake 
+
+# install python 3.9 in docker container with debian
+RUN apt-get update && apt-get upgrade -y \
+ && apt-get install -f -y python3.9 python3.9-dev python3-pip \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+#json
+WORKDIR /json/build.json
+RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DCMAKE_CXX_EXTENSIONS=OFF
+RUN make -j ${num_cores} && make install 
+RUN cd / && rm -rf json && ldconfig
+
+#pybind11
+WORKDIR /pybind11/build.pybind11
+RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DCMAKE_CXX_EXTENSIONS=OFF
+RUN make -j ${num_cores} && make install 
+RUN cd / && rm -rf pybind11 && ldconfig
+
+#pybind11_json
+WORKDIR /pybind11_json/build.pybind11_json
+RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20 -DCMAKE_CXX_EXTENSIONS=OFF
+RUN make -j ${num_cores} && make install 
+RUN cd / && rm -rf pybind11_json && ldconfig
+
+WORKDIR /
+CMD bash

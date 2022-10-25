@@ -11,6 +11,7 @@ Ejemplos:
     docker build -f docker/Dockerfile-QuantLib -t quantlib .
     docker build -f docker/Dockerfile-QuantExt -t quantext .
     docker build -f docker/Dockerfile-json -t json .
+    docker build -f docker/Dockerfile-pybind11 -t pybind11 .
 
 
 ***
@@ -41,7 +42,7 @@ Ejemplos:
   - QuantExt:
   
   cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\Engine\QuantExt\build
-  cmake .. -DCMAKE_CXX_STANDARD=20 -DBoost_INCLUDE_DIR='C:\Users\bloomberg\Desktop\Desarrollo\builds\boost' -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\QuantExt'
+  cmake .. -DCMAKE_CXX_STANDARD=20 -DBoost_INCLUDE_DIR='C:\Users\bloomberg\Desktop\Desarrollo\builds\boost' -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\QuantExt' -DCMAKE_PREFIX_PATH='C:\Users\bloomberg\Desktop\Desarrollo\builds'
   cmake --build . --target INSTALL --config Release
 
   - Json-schema-validator:
@@ -55,4 +56,15 @@ Ejemplos:
   cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\googletest\build
   cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\googletest'
   cmake --build . --target INSTALL --config Release
-    
+
+  - pybind11:
+  
+  cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\pybind11\build
+  cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\pybind11'
+  cmake --build . --target INSTALL --config Release
+
+  - pybind11_json:
+  
+  cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\googletest\build
+  cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\pybind11_json'
+  cmake --build . --target INSTALL --config Release
