@@ -49,7 +49,7 @@ Ejemplos:
    
   cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\json-schema-validator\build
   cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\nlohmann_json_schema_validator' -DCMAKE_PREFIX_PATH='C:\Users\bloomberg\Desktop\Desarrollo\builds'
-  cmake --build . --target INSTALL --config Release
+  cmake --build . --target INSTALL --config Releasecd
 
   - Google test:
   
@@ -68,3 +68,9 @@ Ejemplos:
   cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\googletest\build
   cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\pybind11_json'
   cmake --build . --target INSTALL --config Release
+  
+
+Para compilar en MACOS/Apple silicon se deben agregar los flags:
+
+    cmake .. -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_SYSTEM_PROCESSOR=arm64 -DCMAKE_CXX_STANDARD=20
+    cmake --build . --target install --config Release
