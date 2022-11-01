@@ -12,7 +12,7 @@ COPY Engine/QuantExt ore/QuantExt
 COPY Engine/cmake ore/cmake
 
 WORKDIR ore/QuantExt/build.ore
-RUN cmake .. -DBUILD_DOC=OFF -DCMAKE_BUILD_TYPE=Release
+RUN cmake .. -DBUILD_DOC=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=20
 RUN make -j ${num_cores} && make install 
 RUN cd / && rm -d -rf ore && ldconfig
 
