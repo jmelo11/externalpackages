@@ -52,7 +52,11 @@ Thumbs.db
 /Engine/QuantLib/build
 /Engine/QuantExt/build
 /json/build
+/pybind11/build
+/pybind11_json/build
+/googletest/build
+/nanobench/build
 /json-schema-validator/build
 /googletest/build
 /builds
-
+/build

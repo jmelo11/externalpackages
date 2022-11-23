@@ -12,6 +12,7 @@ Ejemplos:
     docker build -f docker/Dockerfile-QuantExt -t quantext .
     docker build -f docker/Dockerfile-json -t json .
     docker build -f docker/Dockerfile-pybind11 -t pybind11 .
+    docker build -f docker/Dockerfile-externalpackages -t externalpackages .
 
 
 ***
@@ -72,5 +73,6 @@ Ejemplos:
 
 Para compilar en MACOS/Apple silicon se deben agregar los flags:
 
-    cmake .. -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_SYSTEM_PROCESSOR=arm64 -DCMAKE_CXX_STANDARD=20
-    cmake --build . --target install --config Release
+    cmake .. -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_SYSTEM_PROCESSOR=arm64 -DCMAKE_CXX_STANDARD=20  -DCMAKE_INSTALL_PREFIX='/Users/josemelo/Desktop/dev/builds'
+    cmake --build . --target install --config Release -j 12
+    cmake --build . --target install --config Debug -j 12
