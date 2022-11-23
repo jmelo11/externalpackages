@@ -31,48 +31,48 @@ Ejemplos:
   - JSON:
   
   cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\json\build
-  cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\nlohmann_json'
-  cmake --build . --target INSTALL --config Release
+  cmake .. -DCMAKE_CXX_STANDARD=20 
+  cmake --build . --target INSTALL --config Release -j 16
 
   - QuantLib:
   
   cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\Engine\QuantLib\build
-  cmake .. -DCMAKE_CXX_STANDARD=20 -DBoost_INCLUDE_DIR='C:\Users\bloomberg\Desktop\Desarrollo\builds\boost' -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\QuantLib'
-  cmake --build . --target INSTALL --config Release
+  cmake .. -DCMAKE_CXX_STANDARD=20 -DQL_BUILD_BENCHMARK=OFF -DQL_BUILD_EXAMPLES=OFF -DQL_BUILD_TEST_SUITE=OFF
+  cmake --build . --target INSTALL --config Release -j 16
 
   - QuantExt:
   
   cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\Engine\QuantExt\build
-  cmake .. -DCMAKE_CXX_STANDARD=20 -DBoost_INCLUDE_DIR='C:\Users\bloomberg\Desktop\Desarrollo\builds\boost' -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\QuantExt' -DCMAKE_PREFIX_PATH='C:\Users\bloomberg\Desktop\Desarrollo\builds'
+  cmake .. -DCMAKE_CXX_STANDARD=20
   cmake --build . --target INSTALL --config Release
 
   - Json-schema-validator:
    
   cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\json-schema-validator\build
-  cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\nlohmann_json_schema_validator' -DCMAKE_PREFIX_PATH='C:\Users\bloomberg\Desktop\Desarrollo\builds'
+  cmake .. -DCMAKE_CXX_STANDARD=20 
   cmake --build . --target INSTALL --config Releasecd
 
   - Google test:
   
   cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\googletest\build
-  cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\googletest'
+  cmake .. -DCMAKE_CXX_STANDARD=20
   cmake --build . --target INSTALL --config Release
 
   - pybind11:
   
   cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\pybind11\build
-  cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\pybind11'
+  cmake .. -DCMAKE_CXX_STANDARD=20
   cmake --build . --target INSTALL --config Release
 
   - pybind11_json:
   
   cd C:\Users\bloomberg\Desktop\Desarrollo\bankingItau\libs\externalpackages\googletest\build
-  cmake .. -DCMAKE_CXX_STANDARD=20 -DCMAKE_INSTALL_PREFIX='C:\Users\bloomberg\Desktop\Desarrollo\builds\pybind11_json'
+  cmake .. -DCMAKE_CXX_STANDARD=20
   cmake --build . --target INSTALL --config Release
   
 
 Para compilar en MACOS/Apple silicon se deben agregar los flags:
 
-    cmake .. -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_SYSTEM_PROCESSOR=arm64 -DCMAKE_CXX_STANDARD=20  -DCMAKE_INSTALL_PREFIX='/Users/josemelo/Desktop/dev/builds'
+    cmake .. -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_SYSTEM_PROCESSOR=arm64 -DCMAKE_CXX_STANDARD=20
     cmake --build . --target install --config Release -j 12
     cmake --build . --target install --config Debug -j 12
